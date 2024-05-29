@@ -117,6 +117,14 @@ public class PotholeChess_PresentationLayer extends Application {
     public static void main(String[] args) {
         launch();
     }
+    
+    
+    @Override
+    public void stop(){
+        game.serializeObject();
+        System.exit(0);
+        
+    }
 
     private void new_game_button_clicked() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
