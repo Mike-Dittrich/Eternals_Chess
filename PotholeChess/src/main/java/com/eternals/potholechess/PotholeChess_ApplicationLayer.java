@@ -60,7 +60,7 @@ public class PotholeChess_ApplicationLayer implements Serializable {
     
     
     
-    
+    //Application logic for the chess game will go here
     
     
     
