@@ -34,7 +34,7 @@ import javafx.stage.Stage;
  */
 public class PotholeChess_PresentationLayer extends Application {
     
-    private final PotholeChess_ApplicationLayer game = PotholeChess_ApplicationLayer.deserializeObject();
+    private PotholeChess_ApplicationLayer game = PotholeChess_ApplicationLayer.deserializeObject();
     private Stage primary_stage;
     
     @Override
@@ -127,37 +127,47 @@ public class PotholeChess_PresentationLayer extends Application {
         outer_grid.add(inner_grid, 1,0);
         
        return outer_grid;
-    }
+    }//end create_content()
     
+    //regenerates the scene content and displays the new scene
     private void refresh_scene(){
         GridPane outer_grid = create_content();
         
         Scene current_scene = primary_stage.getScene();
         current_scene.setRoot(outer_grid);
         
-    }
+    }//end refresh_scene()
     
+    
+    //override the close button behavior
     @Override
     public void stop(){
         game.serializeObject();
         System.exit(0);
         
-    }
+    }//end stop()
 
+    
+    //clears the board and starts a new game
     private void new_game_button_clicked() {
         game.standardize_board_size();
         refresh_scene();
         
         
-    }
+    }//end new_game_button_clicked()
 
+    
+    //clears the board and starts a new pothole game
     private void new_game_pothole_button_clicked() {
         game.randomize_board_size();
         refresh_scene();
-    }
+    }//end new_game_pothole_button_clicked()
 
+    
+    //resets the application layer object
     private void reset_button_clicked() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        game = new PotholeChess_ApplicationLayer();
+        refresh_scene();
+    }//end reset_button_clicked()
 
-}
+}//end class PotholeChess_PresentationLayer
