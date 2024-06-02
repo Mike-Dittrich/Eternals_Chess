@@ -14,6 +14,7 @@ package com.eternals.potholechess;
 
 
 import java.io.*;
+import java.util.Random;
 
 
 public class PotholeChess_ApplicationLayer implements Serializable {
@@ -56,6 +57,19 @@ public class PotholeChess_ApplicationLayer implements Serializable {
      */
     public void set_row_size(int row_size) {
         this.row_size = row_size;
+    }
+    
+    public void randomize_board_size(){
+        Random random = new Random();
+        set_row_size(random.nextInt(6) + 8);
+        set_column_size(random.nextInt(6) + 8);
+        
+    }
+    
+    public void standardize_board_size(){
+        
+        set_row_size(8);
+        set_column_size(8);
     }
     
     

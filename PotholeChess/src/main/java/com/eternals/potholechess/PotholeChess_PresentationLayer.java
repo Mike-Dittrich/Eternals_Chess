@@ -22,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -34,26 +35,50 @@ import javafx.stage.Stage;
 public class PotholeChess_PresentationLayer extends Application {
     
     private final PotholeChess_ApplicationLayer game = PotholeChess_ApplicationLayer.deserializeObject();
-
+    private Stage primary_stage;
+    
     @Override
     public void start(Stage stage) {
+        
+        this.primary_stage = stage;
         
         //set title
         stage.setTitle("Team Eternals Pothole Chess!");
         
         //create outer_grid
+        GridPane outer_grid = create_content();
+        
+        //Create scene using our outer_grid object
+        Scene scene = new Scene(outer_grid, 1100, 800);
+        
+        
+//        var javaVersion = SystemInfo.javaVersion();
+//        var javafxVersion = SystemInfo.javafxVersion();
+//
+//        var label = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
+//        var scene = new Scene(new StackPane(label), 640, 480);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch();
+    }
+    
+    public GridPane  create_content(){
+    //create outer_grid
         GridPane outer_grid = new GridPane();
         
         //format outer_grid
-        outer_grid.setAlignment(Pos.TOP_CENTER);
+        outer_grid.setAlignment(Pos.TOP_LEFT);
         outer_grid.setPadding(new Insets(25, 25, 25, 25));
         outer_grid.setHgap(10);
         outer_grid.setVgap(10);
         
-        //Format & Add Eternals Chess Label
+        //Format Eternals Chess Label
         Label eternals_label = new Label("Eternals Chess");
         eternals_label.setFont(new Font("Cambria", 30));
-        outer_grid.add(eternals_label, 1, 0);
+        
         
         
         //Add a new game button
@@ -68,14 +93,15 @@ public class PotholeChess_PresentationLayer extends Application {
         Button reset_button = new Button("Reset");
         reset_button.setOnAction(event->reset_button_clicked());
         
-        //Create and add Hbox for control buttons
-        HBox controls= new HBox(10);
+        //Create and add Vbox for label & control buttons
+        VBox controls= new VBox(10);
+        controls.getChildren().add(eternals_label);
         controls.getChildren().add(new_game_button);
         controls.getChildren().add(new_game_pothole_button);
         controls.getChildren().add(reset_button);
         
         //Add HBox controls object to the outer_grid
-        outer_grid.add(controls, 1, 1);
+        outer_grid.add(controls, 0, 0);
         
         
         //generate the board
@@ -98,26 +124,18 @@ public class PotholeChess_PresentationLayer extends Application {
         inner_grid.setStyle("-fx-grid-lines-visible: true");
         
         //add inner_grid object containing board to the outer_grid
-        outer_grid.add(inner_grid, 1,3);
+        outer_grid.add(inner_grid, 1,0);
         
-        
-        //Create scene using our outer_grid object
-        Scene scene = new Scene(outer_grid, 600, 800);
-        
-        
-//        var javaVersion = SystemInfo.javaVersion();
-//        var javafxVersion = SystemInfo.javafxVersion();
-//
-//        var label = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-//        var scene = new Scene(new StackPane(label), 640, 480);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public static void main(String[] args) {
-        launch();
+       return outer_grid;
     }
     
+    private void refresh_scene(){
+        GridPane outer_grid = create_content();
+        
+        Scene current_scene = primary_stage.getScene();
+        current_scene.setRoot(outer_grid);
+        
+    }
     
     @Override
     public void stop(){
@@ -127,11 +145,15 @@ public class PotholeChess_PresentationLayer extends Application {
     }
 
     private void new_game_button_clicked() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        game.standardize_board_size();
+        refresh_scene();
+        
+        
     }
 
     private void new_game_pothole_button_clicked() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        game.randomize_board_size();
+        refresh_scene();
     }
 
     private void reset_button_clicked() {
