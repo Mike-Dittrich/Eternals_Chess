@@ -59,7 +59,7 @@ public class PotholeChess_PresentationLayer extends Application {
 //        var scene = new Scene(new StackPane(label), 640, 480);
         stage.setScene(scene);
         stage.show();
-    }
+    }//end start()
 
     public static void main(String[] args) {
         launch();

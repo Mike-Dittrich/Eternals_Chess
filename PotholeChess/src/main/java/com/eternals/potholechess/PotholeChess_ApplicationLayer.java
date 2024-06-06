@@ -61,8 +61,8 @@ public class PotholeChess_ApplicationLayer implements Serializable {
     
     public void randomize_board_size(){
         Random random = new Random();
-        set_row_size(random.nextInt(6) + 8);
-        set_column_size(random.nextInt(6) + 8);
+        set_row_size(random.nextInt(5) + 8);
+        set_column_size(random.nextInt(5) + 8);
         
     }
     
@@ -120,7 +120,7 @@ public class PotholeChess_ApplicationLayer implements Serializable {
     
     /**
      *          *******************For Use Instead of a Constructor***********************************************
-     *          *******************Don't Use the Constructor in any presentation layer****************************
+     *          *******************Don't Use the Constructor except to reset the object***************************
      * 
      * Pulls a PotholeChess_ApplicationLayer object out of serialization
      * @return either a deserialized object or a new object 
@@ -130,13 +130,13 @@ public class PotholeChess_ApplicationLayer implements Serializable {
         
         //Attempt to Deserialize an object from storage
         try{
-            PotholeChess_ApplicationLayer fromColdStorage;
+            PotholeChess_ApplicationLayer from_cold_storage;
             try (FileInputStream serializedObject = new FileInputStream("SerializedObject.ser");
                     ObjectInputStream in = new ObjectInputStream(serializedObject)){
-                fromColdStorage = (PotholeChess_ApplicationLayer)in.readObject();
+                from_cold_storage = (PotholeChess_ApplicationLayer)in.readObject();
             }
             
-            return fromColdStorage;
+            return from_cold_storage;
             
         } catch(Exception e){
             //default action if Deserialize file i/o failed
