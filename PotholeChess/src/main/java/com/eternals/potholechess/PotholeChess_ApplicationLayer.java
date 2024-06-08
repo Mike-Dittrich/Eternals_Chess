@@ -15,12 +15,14 @@ package com.eternals.potholechess;
 
 import java.io.*;
 import java.util.Random;
+import javafx.scene.shape.Rectangle;
 
 
 public class PotholeChess_ApplicationLayer implements Serializable {
     
     private int column_size;
     private int row_size;
+    private Board board;
     
     
     //non default constructor
@@ -28,6 +30,7 @@ public class PotholeChess_ApplicationLayer implements Serializable {
         
         set_column_size(8);
         set_row_size(8);
+        board = new Board(get_column_size(), get_row_size());
         
     }
 
@@ -63,6 +66,7 @@ public class PotholeChess_ApplicationLayer implements Serializable {
         Random random = new Random();
         set_row_size(random.nextInt(5) + 8);
         set_column_size(random.nextInt(5) + 8);
+        board = new Board(get_column_size(), get_row_size());
         
     }
     
@@ -72,6 +76,9 @@ public class PotholeChess_ApplicationLayer implements Serializable {
         set_column_size(8);
     }
     
+    public void bind(Rectangle tile, int column, int row) {
+        board.bind(tile, column, row);
+    }
     
     
     //Application logic for the chess game will go here
@@ -143,4 +150,6 @@ public class PotholeChess_ApplicationLayer implements Serializable {
             return new PotholeChess_ApplicationLayer();
         }
     }//end deserializeObject()
+
+
 }// end class

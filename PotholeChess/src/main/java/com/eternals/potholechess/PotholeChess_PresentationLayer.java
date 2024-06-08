@@ -116,6 +116,7 @@ public class PotholeChess_PresentationLayer extends Application {
                 } else {
                     tile.setFill(Color.BLACK);
                 }
+                game.bind(tile, column, row);
                 inner_grid.add(tile, column, row);
             }    
         }//end outer for loop
