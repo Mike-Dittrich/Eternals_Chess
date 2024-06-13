@@ -12,8 +12,14 @@ class Team {
         this.color = color;
         initialize_team(team); 
     }
+    
+    public Piece get(int index){
+        return team.get(index);
+    }
 
-    private void initialize_team(ArrayList<Piece> team) {
+    public void initialize_team(ArrayList<Piece> team) {
+        team = new ArrayList<Piece>();
+        
         for (int i = 0; i < 8; i++){
             team.add(new Pawn(color));
         }

@@ -18,6 +18,14 @@ public class Tile_Node {
         this.piece = piece;
         display();
     }
+    
+    public boolean has_piece(){
+        if (piece != null){
+            return true;
+        } else{
+            return false;
+        }
+    }
 
     public boolean is_not_pothole() {
 

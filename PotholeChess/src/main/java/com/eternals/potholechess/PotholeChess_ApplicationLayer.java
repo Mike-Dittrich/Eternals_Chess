@@ -77,6 +77,72 @@ public class PotholeChess_ApplicationLayer implements Serializable {
         white = new Team("WHITE");
         black = new Team("BLACK");
     }
+    
+    public void display_pieces(){
+        for (int i = 0; i < get_row_size(); i++){
+            for (int j = 0; j < get_column_size(); j++){
+                if (board.has_piece(i, j)){
+                    board.display(i, j);
+                }
+            }
+        }//end outer for loop
+    }
+    
+    public void bind_pieces(){
+        int white_x = ((get_column_size() - 1) / 2) - 3;
+        int white_y = (get_row_size() - 2);
+        
+        board.bind(white.get(0), white_x++, white_y);
+        board.bind(white.get(1), white_x++, white_y);
+        board.bind(white.get(2), white_x++, white_y);
+        board.bind(white.get(3), white_x++, white_y);
+        board.bind(white.get(4), white_x++, white_y);
+        board.bind(white.get(5), white_x++, white_y);
+        board.bind(white.get(6), white_x++, white_y);
+        board.bind(white.get(7), white_x, white_y++);
+        
+        white_x -= 7;
+        
+        board.bind(white.get(8), white_x++, white_y);
+        board.bind(white.get(9), white_x++, white_y);
+        board.bind(white.get(10), white_x++, white_y);
+        board.bind(white.get(11), white_x++, white_y);
+        board.bind(white.get(12), white_x++, white_y);
+        board.bind(white.get(13), white_x++, white_y);
+        board.bind(white.get(14), white_x++, white_y);
+        board.bind(white.get(15), white_x, white_y);
+        
+        
+        int black_x = ((get_column_size() - 1) / 2) - 3;
+        int black_y = 1;
+        
+        board.bind(black.get(0), black_x++, black_y);
+        board.bind(black.get(1), black_x++, black_y);
+        board.bind(black.get(2), black_x++, black_y);
+        board.bind(black.get(3), black_x++, black_y);
+        board.bind(black.get(4), black_x++, black_y);
+        board.bind(black.get(5), black_x++, black_y);
+        board.bind(black.get(6), black_x++, black_y);
+        board.bind(black.get(7), black_x, black_y--);
+        
+        black_x -= 7;
+        
+        board.bind(black.get(8), black_x++, black_y);
+        board.bind(black.get(9), black_x++, black_y);
+        board.bind(black.get(10), black_x++, black_y);
+        board.bind(black.get(11), black_x++, black_y);
+        board.bind(black.get(12), black_x++, black_y);
+        board.bind(black.get(13), black_x++, black_y);
+        board.bind(black.get(14), black_x++, black_y);
+        board.bind(black.get(15), black_x, black_y);
+        
+        
+        
+    }
+    
+    public void bind(Piece piece, int column, int row){
+        board.bind(piece, column, row);
+    }
 
     public void bind(Rectangle tile, int column, int row) {
         board.bind(tile, column, row);
