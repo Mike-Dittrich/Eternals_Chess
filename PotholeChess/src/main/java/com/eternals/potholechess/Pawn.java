@@ -13,4 +13,15 @@ public class Pawn extends Piece {
 
         return moves;
     }
+    
+    @Override
+    public String get_image_file(){
+        if(get_color().equals("WHITE")){
+            return "Images/WHITE_PAWN.png";
+        } else if (get_color().equals("BLACK")){
+        return "Images/BLACK_PAWN.png";
+    }
+        return "";
+        
+    }
 }

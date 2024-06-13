@@ -20,8 +20,19 @@ public class Piece {
             this.color = color;
         }
     }
+    
+    String get_color(){
+        
+        return color;
+    }
 
     public boolean is_not_pothole() {
         return true;
     }
+
+    String get_image_file() {
+        return "";
+    }
+
+
 }

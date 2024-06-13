@@ -8,30 +8,29 @@ Provides data and logic layers for GUI to interact with.
 
 
 
-*/
-
+ */
 package com.eternals.potholechess;
-
 
 import java.io.*;
 import java.util.Random;
 import javafx.scene.shape.Rectangle;
 
-
 public class PotholeChess_ApplicationLayer implements Serializable {
-    
+
     private int column_size;
     private int row_size;
     private Board board;
-    
-    
+    private Team white;
+    private Team black;
+
     //non default constructor
-    public PotholeChess_ApplicationLayer(){
-        
+    public PotholeChess_ApplicationLayer() {
+
         set_column_size(8);
         set_row_size(8);
         board = new Board(get_column_size(), get_row_size());
-        
+        white = new Team("WHITE");
+        black = new Team("BLACK");
     }
 
     /**
@@ -61,95 +60,73 @@ public class PotholeChess_ApplicationLayer implements Serializable {
     public void set_row_size(int row_size) {
         this.row_size = row_size;
     }
-    
-    public void randomize_board_size(){
+
+    public void randomize_board_size() {
         Random random = new Random();
         set_row_size(random.nextInt(5) + 8);
         set_column_size(random.nextInt(5) + 8);
         board = new Board(get_column_size(), get_row_size());
-        
+        white = new Team("WHITE");
+        black = new Team("BLACK");
     }
-    
-    public void standardize_board_size(){
-        
+
+    public void standardize_board_size() {
+
         set_row_size(8);
         set_column_size(8);
+        white = new Team("WHITE");
+        black = new Team("BLACK");
     }
-    
+
     public void bind(Rectangle tile, int column, int row) {
         board.bind(tile, column, row);
     }
-    
-    
+
     //Application logic for the chess game will go here
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     /**
-     *Serialize the PotholeChess_ApplicationLayer object
+     * Serialize the PotholeChess_ApplicationLayer object
      */
-    public void serializeObject(){
-        
-            //Attempt to serialize object into SerializedObject.ser file
-        try{
-            try(FileOutputStream serializedObject = new FileOutputStream("SerializedObject.ser");
-                    ObjectOutputStream out = new ObjectOutputStream(serializedObject)){
-                
+    public void serializeObject() {
+
+        //Attempt to serialize object into SerializedObject.ser file
+        try {
+            try (FileOutputStream serializedObject = new FileOutputStream("SerializedObject.ser"); ObjectOutputStream out = new ObjectOutputStream(serializedObject)) {
+
                 out.writeObject(this);
             }
-                System.out.println("Game Successfully Serialized");
-                
-        } catch(Exception e){
+            System.out.println("Game Successfully Serialized");
+
+        } catch (Exception e) {
             System.out.println("Failure in serializeObject() file i/o.  PotholeChess_ApplicationLayer Class.  Exception not tracked.");
         }
-        
+
     }//end serializeObject()
-    
-    
+
     /**
-     *          *******************For Use Instead of a Constructor***********************************************
-     *          *******************Don't Use the Constructor except to reset the object***************************
-     * 
+     ********************For Use Instead of a Constructor***********************************************
+     * *******************Don't Use the Constructor except to reset the object***************************
+     *
      * Pulls a PotholeChess_ApplicationLayer object out of serialization
-     * @return either a deserialized object or a new object 
+     *
+     * @return either a deserialized object or a new object
      */
-    
-    public static PotholeChess_ApplicationLayer deserializeObject(){
-        
+    public static PotholeChess_ApplicationLayer deserializeObject() {
+
         //Attempt to Deserialize an object from storage
-        try{
+        try {
             PotholeChess_ApplicationLayer from_cold_storage;
-            try (FileInputStream serializedObject = new FileInputStream("SerializedObject.ser");
-                    ObjectInputStream in = new ObjectInputStream(serializedObject)){
-                from_cold_storage = (PotholeChess_ApplicationLayer)in.readObject();
+            try (FileInputStream serializedObject = new FileInputStream("SerializedObject.ser"); 
+                    ObjectInputStream in = new ObjectInputStream(serializedObject))
+            {
+                from_cold_storage = (PotholeChess_ApplicationLayer) in.readObject();
             }
-            
+
             return from_cold_storage;
-            
-        } catch(Exception e){
+
+        } catch (Exception e) {
             //default action if Deserialize file i/o failed
             return new PotholeChess_ApplicationLayer();
         }
     }//end deserializeObject()
-
 
 }// end class
