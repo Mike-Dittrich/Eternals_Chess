@@ -1,10 +1,11 @@
 
 package com.eternals.potholechess;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class King extends Piece {
+public class King extends Piece implements Serializable {
     
     public King(String color) {
         super(color);

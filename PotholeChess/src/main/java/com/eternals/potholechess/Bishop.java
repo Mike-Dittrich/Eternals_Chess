@@ -1,8 +1,9 @@
 package com.eternals.potholechess;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Bishop extends Piece {
+public class Bishop extends Piece implements Serializable {
 
     public Bishop(String color) {
         super(color);

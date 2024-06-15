@@ -1,4 +1,15 @@
-com\eternals\potholechess\PotholeChess_PresentationLayer.class
+com\eternals\potholechess\Pothole.class
+com\eternals\potholechess\Piece.class
+com\eternals\potholechess\Pawn.class
+com\eternals\potholechess\Tile_Node.class
+com\eternals\potholechess\Queen.class
 com\eternals\potholechess\PotholeChess_ApplicationLayer.class
 com\eternals\potholechess\SystemInfo.class
+com\eternals\potholechess\Board.class
+com\eternals\potholechess\Bishop.class
 module-info.class
+com\eternals\potholechess\PotholeChess_PresentationLayer.class
+com\eternals\potholechess\King.class
+com\eternals\potholechess\Knight.class
+com\eternals\potholechess\Team.class
+com\eternals\potholechess\Rook.class

@@ -107,8 +107,8 @@ public class PotholeChess_PresentationLayer extends Application {
         //generate the board
         GridPane inner_grid = new GridPane();
         
-        for (int row = 0; row < game.get_row_size(); row++){
-            for (int column = 0; column < game.get_column_size(); column++){
+        for (int row = 1; row < game.get_row_size(); row++){
+            for (int column = 1; column < game.get_column_size(); column++){
                 Rectangle tile = new Rectangle(60,60);
                 
                 if ((row + column) % 2 == 0){

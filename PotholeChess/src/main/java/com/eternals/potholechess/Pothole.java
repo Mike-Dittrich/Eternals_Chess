@@ -1,8 +1,10 @@
 
 package com.eternals.potholechess;
 
+import java.io.Serializable;
 
-public class Pothole extends Piece {
+
+public class Pothole extends Piece implements Serializable {
     
     public Pothole(String color) {
         super(color);

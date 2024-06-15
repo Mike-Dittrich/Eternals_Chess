@@ -153,6 +153,8 @@ public class PotholeChess_ApplicationLayer implements Serializable {
      * Serialize the PotholeChess_ApplicationLayer object
      */
     public void serializeObject() {
+        
+        board.unbind();
 
         //Attempt to serialize object into SerializedObject.ser file
         try {
@@ -162,8 +164,9 @@ public class PotholeChess_ApplicationLayer implements Serializable {
             }
             System.out.println("Game Successfully Serialized");
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("Failure in serializeObject() file i/o.  PotholeChess_ApplicationLayer Class.  Exception not tracked.");
+            System.out.println(e.toString());
         }
 
     }//end serializeObject()
@@ -186,11 +189,13 @@ public class PotholeChess_ApplicationLayer implements Serializable {
             {
                 from_cold_storage = (PotholeChess_ApplicationLayer) in.readObject();
             }
-
+            
+            System.out.println("Game Successfully Deserialized");
             return from_cold_storage;
 
         } catch (Exception e) {
             //default action if Deserialize file i/o failed
+            System.out.println("Game Unsuccessfully Deserialized, New Object Returned");
             return new PotholeChess_ApplicationLayer();
         }
     }//end deserializeObject()

@@ -1,6 +1,8 @@
 package com.eternals.potholechess;
 
-public class Piece {
+import java.io.Serializable;
+
+public class Piece implements Serializable {
 
     int move_count;
     String color;
