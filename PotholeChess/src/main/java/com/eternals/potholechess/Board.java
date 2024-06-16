@@ -1,6 +1,7 @@
 package com.eternals.potholechess;
 
 import java.io.Serializable;
+import java.util.Random;
 import javafx.scene.shape.Rectangle;
 
 public class Board implements Serializable {
@@ -28,7 +29,7 @@ public class Board implements Serializable {
     public void bind(Rectangle rectangle, int column, int row) {
 
         try {
-            board[column][row].bind(rectangle);
+            board[column][row].bind(rectangle, column, row);
             board[column][row].display();
         } catch (Exception e) {
             System.out.println(e.toString());
@@ -46,7 +47,11 @@ public class Board implements Serializable {
 
     public void bind(Piece piece, int column, int row) {
         board[column][row].bind(piece);
-        board[column][row].display();
+        try {
+            board[column][row].display();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
     public boolean has_piece(int i, int j) {
@@ -60,5 +65,20 @@ public class Board implements Serializable {
 
     void display(int i, int j) {
         board[i][j].display();
+    }
+
+    void bind_potholes(int potholes) {
+        int i = 0;
+        Random random = new Random();
+        //(random.nextInt(column);
+
+        while (i != potholes) {
+            int x = random.nextInt(column);
+            int y = random.nextInt(row);
+            if (!board[x][y].has_piece()){
+                board[x][y].bind(new Pothole("POTHOLE"));
+                
+            }
+        }
     }
 }

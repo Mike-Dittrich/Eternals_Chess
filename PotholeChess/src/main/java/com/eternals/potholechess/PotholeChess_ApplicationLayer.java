@@ -22,15 +22,22 @@ public class PotholeChess_ApplicationLayer implements Serializable {
     private Board board;
     private Team white;
     private Team black;
+    private boolean pothole;
 
     //non default constructor
     public PotholeChess_ApplicationLayer() {
 
+        pothole = false;
         set_column_size(8);
         set_row_size(8);
         board = new Board(get_column_size(), get_row_size());
         white = new Team("WHITE");
         black = new Team("BLACK");
+        try {
+            //bind_pieces();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
     /**
@@ -62,6 +69,7 @@ public class PotholeChess_ApplicationLayer implements Serializable {
     }
 
     public void randomize_board_size() {
+        pothole = true;
         Random random = new Random();
         set_row_size(random.nextInt(5) + 8);
         set_column_size(random.nextInt(5) + 8);
@@ -77,21 +85,21 @@ public class PotholeChess_ApplicationLayer implements Serializable {
         white = new Team("WHITE");
         black = new Team("BLACK");
     }
-    
-    public void display_pieces(){
-        for (int i = 0; i < get_row_size(); i++){
-            for (int j = 0; j < get_column_size(); j++){
-                if (board.has_piece(i, j)){
+
+    public void display_pieces() {
+        for (int i = 0; i < get_row_size(); i++) {
+            for (int j = 0; j < get_column_size(); j++) {
+                if (board.has_piece(i, j)) {
                     board.display(i, j);
                 }
             }
         }//end outer for loop
     }
-    
-    public void bind_pieces(){
+
+    public void bind_pieces() {
         int white_x = ((get_column_size() - 1) / 2) - 3;
         int white_y = (get_row_size() - 2);
-        
+
         board.bind(white.get(0), white_x++, white_y);
         board.bind(white.get(1), white_x++, white_y);
         board.bind(white.get(2), white_x++, white_y);
@@ -100,9 +108,9 @@ public class PotholeChess_ApplicationLayer implements Serializable {
         board.bind(white.get(5), white_x++, white_y);
         board.bind(white.get(6), white_x++, white_y);
         board.bind(white.get(7), white_x, white_y++);
-        
+
         white_x -= 7;
-        
+
         board.bind(white.get(8), white_x++, white_y);
         board.bind(white.get(9), white_x++, white_y);
         board.bind(white.get(10), white_x++, white_y);
@@ -111,11 +119,10 @@ public class PotholeChess_ApplicationLayer implements Serializable {
         board.bind(white.get(13), white_x++, white_y);
         board.bind(white.get(14), white_x++, white_y);
         board.bind(white.get(15), white_x, white_y);
-        
-        
+
         int black_x = ((get_column_size() - 1) / 2) - 3;
         int black_y = 1;
-        
+
         board.bind(black.get(0), black_x++, black_y);
         board.bind(black.get(1), black_x++, black_y);
         board.bind(black.get(2), black_x++, black_y);
@@ -124,9 +131,9 @@ public class PotholeChess_ApplicationLayer implements Serializable {
         board.bind(black.get(5), black_x++, black_y);
         board.bind(black.get(6), black_x++, black_y);
         board.bind(black.get(7), black_x, black_y--);
-        
+
         black_x -= 7;
-        
+
         board.bind(black.get(8), black_x++, black_y);
         board.bind(black.get(9), black_x++, black_y);
         board.bind(black.get(10), black_x++, black_y);
@@ -136,11 +143,10 @@ public class PotholeChess_ApplicationLayer implements Serializable {
         board.bind(black.get(14), black_x++, black_y);
         board.bind(black.get(15), black_x, black_y);
         
-        
-        
+
     }
-    
-    public void bind(Piece piece, int column, int row){
+
+    public void bind(Piece piece, int column, int row) {
         board.bind(piece, column, row);
     }
 
@@ -153,7 +159,7 @@ public class PotholeChess_ApplicationLayer implements Serializable {
      * Serialize the PotholeChess_ApplicationLayer object
      */
     public void serializeObject() {
-        
+
         board.unbind();
 
         //Attempt to serialize object into SerializedObject.ser file
@@ -172,8 +178,10 @@ public class PotholeChess_ApplicationLayer implements Serializable {
     }//end serializeObject()
 
     /**
-     ********************For Use Instead of a Constructor***********************************************
-     * *******************Don't Use the Constructor except to reset the object***************************
+     ********************For Use Instead of a
+     * Constructor***********************************************
+     * *******************Don't Use the Constructor except to reset the
+     * object***************************
      *
      * Pulls a PotholeChess_ApplicationLayer object out of serialization
      *
@@ -184,12 +192,10 @@ public class PotholeChess_ApplicationLayer implements Serializable {
         //Attempt to Deserialize an object from storage
         try {
             PotholeChess_ApplicationLayer from_cold_storage;
-            try (FileInputStream serializedObject = new FileInputStream("SerializedObject.ser"); 
-                    ObjectInputStream in = new ObjectInputStream(serializedObject))
-            {
+            try (FileInputStream serializedObject = new FileInputStream("SerializedObject.ser"); ObjectInputStream in = new ObjectInputStream(serializedObject)) {
                 from_cold_storage = (PotholeChess_ApplicationLayer) in.readObject();
             }
-            
+
             System.out.println("Game Successfully Deserialized");
             return from_cold_storage;
 

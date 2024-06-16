@@ -14,4 +14,10 @@ public class Pothole extends Piece implements Serializable {
     public boolean is_not_pothole(){
         return false;
     }
+    
+        @Override
+    public String get_image_file() {
+            return "Images/POTHOLE.png";
+
+    }
 }

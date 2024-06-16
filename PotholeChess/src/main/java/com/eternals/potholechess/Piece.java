@@ -18,9 +18,8 @@ public class Piece implements Serializable {
     }
 
     void set_color(String color) {
-        if (color.equals("WHITE") || color.equals("BLACK")) {
             this.color = color;
-        }
+        
     }
     
     String get_color(){

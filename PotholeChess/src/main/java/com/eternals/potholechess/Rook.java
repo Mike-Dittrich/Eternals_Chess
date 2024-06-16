@@ -14,4 +14,15 @@ public class Rook extends Piece implements Serializable {
 
         return moves;
     }
+
+    @Override
+    public String get_image_file() {
+        if (get_color().equals("WHITE")) {
+            return "Images/WHITE_ROOK.png";
+        } else if (get_color().equals("BLACK")) {
+            return "Images/BLACK_ROOK.png";
+        }
+        return "";
+
+    }
 }
