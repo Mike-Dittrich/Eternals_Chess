@@ -103,6 +103,9 @@ public class PotholeChess_PresentationLayer extends Application {
         for (int row = 0; row < game.get_row_size(); row++) {
             for (int column = 0; column < game.get_column_size(); column++) {
                 Rectangle tile = new Rectangle(60, 60);
+                final int final_column = column;
+                final int final_row = row;
+                tile.setOnMouseClicked(event -> tile_clicked(final_column, final_row));
 
                 if ((row + column) % 2 == 0) {
                     tile.setFill(Color.WHITE);
@@ -114,7 +117,11 @@ public class PotholeChess_PresentationLayer extends Application {
             }
         }//end outer for loop
 
-        game.bind_pieces();
+        try{
+        game.display_pieces();
+        } catch (Exception e){
+            System.out.println(e.toString());
+        }
         //format inner_grid
         inner_grid.setStyle("-fx-grid-lines-visible: true");
 
@@ -123,6 +130,10 @@ public class PotholeChess_PresentationLayer extends Application {
 
         return outer_grid;
     }//end create_content()
+    
+    private void tile_clicked(int column, int row){
+        game.select(column, row);
+    }
 
     //regenerates the scene content and displays the new scene
     private void refresh_scene() {
@@ -156,7 +167,7 @@ public class PotholeChess_PresentationLayer extends Application {
 
     //resets the application layer object
     private void reset_button_clicked() {
-        game = new PotholeChess_ApplicationLayer();
+        game.reset_board();
         refresh_scene();
     }//end reset_button_clicked()
 

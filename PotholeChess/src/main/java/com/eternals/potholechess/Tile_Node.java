@@ -27,10 +27,21 @@ public class Tile_Node implements Serializable {
     public void unbind() {
         this.rectangle = null;
     }
+    
+    public void clear_piece(){
+        
+        if (piece != null && piece.is_not_pothole()){
+        this.piece = null;
+        display();
+        }
+        
+    }
 
     public void bind(Piece piece) {
         this.piece = piece;
+        if (rectangle != null){
         display();
+        }
     }
 
     public Piece get_piece() {
@@ -60,11 +71,11 @@ public class Tile_Node implements Serializable {
 
     public void display() {
 
-        if (piece != null) {
+        if (piece != null && rectangle != null) {
             Image image = new Image("file:" + piece.get_image_file());
 
             rectangle.setFill(new ImagePattern(image));
-        } else {
+        } else if (rectangle != null){
             if ((row + column) % 2 == 0) {
                 rectangle.setFill(Color.WHITE);
             } else {

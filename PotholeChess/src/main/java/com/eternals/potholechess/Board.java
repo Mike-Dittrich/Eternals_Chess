@@ -54,9 +54,9 @@ public class Board implements Serializable {
         }
     }
 
-    public boolean has_piece(int i, int j) {
+    public boolean has_piece(int column, int row) {
 
-        if (board[i][j].has_piece()) {
+        if (board[column][row].has_piece()) {
             return true;
         } else {
             return false;
@@ -64,9 +64,20 @@ public class Board implements Serializable {
     }
 
     void display(int i, int j) {
+        try{
         board[i][j].display();
-    }
+        } catch (Exception e){
+            System.out.println(e.toString());
+        }
+        }
 
+    public void clear_pieces(){
+        for (int i = 0; i < column; i++){
+            for (int j = 0; j < row; j++){
+                board[i][j].clear_piece();
+            }
+        }
+    }
     void bind_potholes(int potholes) {
         int i = 0;
         Random random = new Random();

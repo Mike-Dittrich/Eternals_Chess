@@ -23,16 +23,21 @@ public class PotholeChess_ApplicationLayer implements Serializable {
     private Team white;
     private Team black;
     private boolean pothole;
+    private boolean game_active;
 
     //non default constructor
     public PotholeChess_ApplicationLayer() {
 
-        pothole = false;
-        set_column_size(8);
-        set_row_size(8);
-        board = new Board(get_column_size(), get_row_size());
-        white = new Team("WHITE");
-        black = new Team("BLACK");
+//        pothole = false;
+//        set_column_size(8);
+//        set_row_size(8);
+//        board = new Board(get_column_size(), get_row_size());
+//        white = new Team("WHITE");
+//        black = new Team("BLACK");
+//        game_active = true;
+        
+        standardize_board_size();
+        
         try {
             //bind_pieces();
         } catch (Exception e) {
@@ -69,6 +74,7 @@ public class PotholeChess_ApplicationLayer implements Serializable {
     }
 
     public void randomize_board_size() {
+        game_active = true;
         pothole = true;
         Random random = new Random();
         set_row_size(random.nextInt(5) + 8);
@@ -76,24 +82,42 @@ public class PotholeChess_ApplicationLayer implements Serializable {
         board = new Board(get_column_size(), get_row_size());
         white = new Team("WHITE");
         black = new Team("BLACK");
+        bind_pieces();
     }
 
     public void standardize_board_size() {
-
+        game_active = true;
+        pothole = false;
         set_row_size(8);
         set_column_size(8);
+        board = new Board(get_column_size(), get_row_size());
         white = new Team("WHITE");
         black = new Team("BLACK");
+        bind_pieces();
+    }
+    
+    public void reset_board(){
+        pothole = false;
+        white = new Team("WHITE");
+        black = new Team("BLACK");
+        board.clear_pieces();
+        bind_pieces();
     }
 
     public void display_pieces() {
         for (int i = 0; i < get_row_size(); i++) {
             for (int j = 0; j < get_column_size(); j++) {
-                if (board.has_piece(i, j)) {
-                    board.display(i, j);
+                if (board.has_piece(j, i)) {
+                    board.display(j, i);
                 }
             }
         }//end outer for loop
+    }
+    
+        public void select(int column, int row) {
+        if (game_active){
+            System.out.println(column + " " + row);
+        }
     }
 
     public void bind_pieces() {
@@ -142,6 +166,43 @@ public class PotholeChess_ApplicationLayer implements Serializable {
         board.bind(black.get(13), black_x++, black_y);
         board.bind(black.get(14), black_x++, black_y);
         board.bind(black.get(15), black_x, black_y);
+        
+        
+        
+        
+        if (pothole){
+        Random random = new Random();
+        int number_of_potholes;
+        int potholes;
+        if(get_column_size() * get_row_size() < 85){
+            number_of_potholes = random.nextInt(4) + 1;
+        } else if (get_column_size() * get_row_size() < 105){
+            number_of_potholes = random.nextInt(5) + 2;
+        }else if (get_column_size() * get_row_size() < 120){
+            number_of_potholes = random.nextInt(6) + 3;
+        } else {
+            number_of_potholes = random.nextInt(7) + 4;
+        }
+            
+            potholes = 0;
+            while (potholes <= number_of_potholes){
+                int column, row;
+                column = random.nextInt(get_column_size());
+                row = random.nextInt(get_row_size());
+                
+                if (!board.has_piece(column, row)){
+                    try{
+                    board.bind(new Pothole("POTHOLE"), column, row);
+                    potholes++;
+                    } catch (Exception e){
+                        System.out.println(e.toString());
+                    }
+                }
+                
+            }
+            
+            
+        }
         
 
     }
@@ -205,5 +266,6 @@ public class PotholeChess_ApplicationLayer implements Serializable {
             return new PotholeChess_ApplicationLayer();
         }
     }//end deserializeObject()
+
 
 }// end class
