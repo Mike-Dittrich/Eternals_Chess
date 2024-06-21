@@ -43,6 +43,14 @@ public class Tile_Node implements Serializable {
         display();
         }
     }
+    
+    public String team(){
+        if (piece != null){
+        return piece.get_color();
+        } else {
+            return "EMPTY";
+        }
+    }
 
     public Piece get_piece() {
         return piece;

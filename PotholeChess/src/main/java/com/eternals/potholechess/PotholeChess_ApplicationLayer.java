@@ -101,6 +101,7 @@ public class PotholeChess_ApplicationLayer implements Serializable {
         white = new Team("WHITE");
         black = new Team("BLACK");
         board.clear_pieces();
+        board.set_turn();
         bind_pieces();
     }
 
@@ -115,9 +116,15 @@ public class PotholeChess_ApplicationLayer implements Serializable {
     }
     
         public void select(int column, int row) {
+            
+            try{
         if (game_active){
             System.out.println(column + " " + row);
+            board.select(column, row);
         }
+            } catch (Exception e){
+                System.out.println(e.toString());
+            }
     }
 
     public void bind_pieces() {
@@ -215,7 +222,9 @@ public class PotholeChess_ApplicationLayer implements Serializable {
         board.bind(tile, column, row);
     }
 
-    //Application logic for the chess game will go here
+    public String get_game_info_text(){
+        return board.get_game_info_text();
+    }
     /**
      * Serialize the PotholeChess_ApplicationLayer object
      */

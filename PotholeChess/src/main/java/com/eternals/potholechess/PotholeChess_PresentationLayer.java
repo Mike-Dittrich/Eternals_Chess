@@ -33,6 +33,7 @@ public class PotholeChess_PresentationLayer extends Application {
 
     private PotholeChess_ApplicationLayer game = PotholeChess_ApplicationLayer.deserializeObject();
     private Stage primary_stage;
+    private Label game_info;
 
     @Override
     public void start(Stage stage) {
@@ -86,13 +87,18 @@ public class PotholeChess_PresentationLayer extends Application {
         //Add a reset button
         Button reset_button = new Button("Reset");
         reset_button.setOnAction(event -> reset_button_clicked());
+        
+        //Add a game info label
+        game_info = new Label(game.get_game_info_text());
+        game_info.setFont(new Font("Cambria", 20));
 
-        //Create and add Vbox for label & control buttons
+        //Create and add Vbox for labels & control buttons
         VBox controls = new VBox(10);
         controls.getChildren().add(eternals_label);
         controls.getChildren().add(new_game_button);
         controls.getChildren().add(new_game_pothole_button);
         controls.getChildren().add(reset_button);
+        controls.getChildren().add(game_info);
 
         //Add HBox controls object to the outer_grid
         outer_grid.add(controls, 0, 0);
@@ -133,6 +139,7 @@ public class PotholeChess_PresentationLayer extends Application {
     
     private void tile_clicked(int column, int row){
         game.select(column, row);
+        game_info.setText(game.get_game_info_text());
     }
 
     //regenerates the scene content and displays the new scene
