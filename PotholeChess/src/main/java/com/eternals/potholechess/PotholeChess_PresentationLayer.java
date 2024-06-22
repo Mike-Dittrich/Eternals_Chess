@@ -84,6 +84,10 @@ public class PotholeChess_PresentationLayer extends Application {
         //Add a new pothole chess button
         Button new_game_pothole_button = new Button("New Pothole Game");
         new_game_pothole_button.setOnAction(event -> new_game_pothole_button_clicked());
+        
+        //Add a new Apocalypse Mode button
+        Button apocalypse_mode_button = new Button("Apocalypse Mode");
+        apocalypse_mode_button.setOnAction(event -> apocalypse_mode_button_clicked());
 
         //Add a reset button
         Button reset_button = new Button("Reset");
@@ -98,6 +102,7 @@ public class PotholeChess_PresentationLayer extends Application {
         controls.getChildren().add(eternals_label);
         controls.getChildren().add(new_game_button);
         controls.getChildren().add(new_game_pothole_button);
+        controls.getChildren().add(apocalypse_mode_button);
         controls.getChildren().add(reset_button);
         controls.getChildren().add(game_info);
 
@@ -142,6 +147,7 @@ public class PotholeChess_PresentationLayer extends Application {
         
         ScrollPane scroll_content = new ScrollPane();
         scroll_content.setContent(outer_grid);
+        scroll_content.setStyle("-fx-background:#FAF0E6;");
 
         return scroll_content;
     }//end create_content()
@@ -186,5 +192,10 @@ public class PotholeChess_PresentationLayer extends Application {
         game.reset_board();
         refresh_scene();
     }//end reset_button_clicked()
+
+    private void apocalypse_mode_button_clicked() {
+        game.apocalypse_board_size();
+        refresh_scene();
+    }
 
 }//end class PotholeChess_PresentationLayer
