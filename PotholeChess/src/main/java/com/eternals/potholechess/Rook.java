@@ -13,38 +13,10 @@ public class Rook extends Piece implements Serializable {
     public ArrayList<Tile_Node> get_moves(Tile_Node[][] board, int column, int row) {
         ArrayList<Tile_Node> moves = new ArrayList<>();
 
-        for (int offset = 1; offset < 15; offset++) {
+        boolean sentinal = true;
+        int offset = 1;
 
-            try {
-                if (board[column - offset][row].is_not_pothole()) {
-                    if (board[column - offset][row].has_piece()) {
-
-                        if (!board[column - offset][row].team().equals(board[column][row].team())) {
-                            moves.add(board[column - offset][row]);
-                            break;
-                        } else if (board[column - offset][row].get_piece() instanceof King) {
-                            if (this.move_count == 0 && board[column - offset][row].get_piece().get_move_count() == 0) {
-                                moves.add(board[column - offset][row]);
-                            }
-                            break;
-                        }
-                        if (board[column - offset][row].team().equals(board[column][row].team())){
-                            break;
-                        }
-
-                    } else {
-                        moves.add(board[column - offset][row]);
-                    }
-                } else {
-                    break;
-                }
-            } catch (Exception e) {
-                break;
-            }
-
-        }//end outer for loop
-
-        for (int offset = 1; offset < 15; offset++) {
+        while (sentinal) {
 
             try {
                 if (board[column + offset][row].is_not_pothole()) {
@@ -52,27 +24,86 @@ public class Rook extends Piece implements Serializable {
 
                         if (!board[column + offset][row].team().equals(board[column][row].team())) {
                             moves.add(board[column + offset][row]);
+                            sentinal = false;
                             break;
                         } else if (board[column + offset][row].get_piece() instanceof King) {
-                            if (this.move_count == 0 && board[column + offset][row].get_piece().get_move_count() == 0) {
+                            if (get_move_count() == 0 && board[column + offset][row].get_piece().get_move_count() == 0) {
                                 moves.add(board[column + offset][row]);
+                                
+                                sentinal = false;
+                                break;
+                            } else {
+                                sentinal = false;
+                                break;
                             }
+
+                        } else {
+                            sentinal = false;
                             break;
                         }
 
                     } else {
                         moves.add(board[column + offset][row]);
+                        offset++;
+                        continue;
                     }
                 } else {
+                    sentinal = false;
                     break;
                 }
             } catch (Exception e) {
+                sentinal = false;
                 break;
             }
 
-        }//end outer for loop
+        }//end outer while loop
 
-        for (int offset = 1; offset < 15; offset++) {
+        sentinal = true;
+        offset = 1;
+        while (sentinal) {
+
+            try {
+                if (board[column - offset][row].is_not_pothole()) {
+                    if (board[column - offset][row].has_piece()) {
+
+                        if (!board[column - offset][row].team().equals(board[column][row].team())) {
+                            moves.add(board[column - offset][row]);
+                            sentinal = false;
+                            break;
+                        } else if (board[column - offset][row].get_piece() instanceof King) {
+                            if (get_move_count() == 0 && board[column - offset][row].get_piece().get_move_count() == 0) {
+                                moves.add(board[column - offset][row]);
+                                sentinal = false;
+                                break;
+                            } else {
+                                sentinal = false;
+                                break;
+                            }
+
+                        } else {
+                            sentinal = false;
+                            break;
+                        }
+
+                    } else {
+                        moves.add(board[column - offset][row]);
+                        offset++;
+                        continue;
+                    }
+                } else {
+                    sentinal = false;
+                    break;
+                }
+            } catch (Exception e) {
+                sentinal = false;
+                break;
+            }
+
+        }//end outer while loop
+
+        sentinal = true;
+        offset = 1;
+        while (sentinal) {
 
             try {
                 if (board[column][row - offset].is_not_pothole()) {
@@ -80,27 +111,34 @@ public class Rook extends Piece implements Serializable {
 
                         if (!board[column][row - offset].team().equals(board[column][row].team())) {
                             moves.add(board[column][row - offset]);
+                            sentinal = false;
                             break;
-                        } else if (board[column][row - offset].get_piece() instanceof King) {
-                            if (this.move_count == 0 && board[column][row - offset].get_piece().get_move_count() == 0) {
-                                moves.add(board[column][row - offset]);
-                            }
+                        } else {
+                            sentinal = false;
                             break;
                         }
 
                     } else {
                         moves.add(board[column][row - offset]);
+                        offset++;
+                        continue;
                     }
                 } else {
+                    sentinal = false;
                     break;
                 }
             } catch (Exception e) {
+                sentinal = false;
                 break;
             }
 
-        }//end outer for loop
-
-        for (int offset = 1; offset < 15; offset++) {
+        }//end outer while loop
+        
+        
+        
+                sentinal = true;
+        offset = 1;
+        while (sentinal) {
 
             try {
                 if (board[column][row + offset].is_not_pothole()) {
@@ -108,25 +146,28 @@ public class Rook extends Piece implements Serializable {
 
                         if (!board[column][row + offset].team().equals(board[column][row].team())) {
                             moves.add(board[column][row + offset]);
+                            sentinal = false;
                             break;
-                        } else if (board[column][row + offset].get_piece() instanceof King) {
-                            if (this.move_count == 0 && board[column][row + offset].get_piece().get_move_count() == 0) {
-                                moves.add(board[column][row + offset]);
-                            }
+                        } else {
+                            sentinal = false;
                             break;
                         }
 
                     } else {
-                        moves.add(board[column - offset][row + offset]);
+                        moves.add(board[column][row + offset]);
+                        offset++;
+                        continue;
                     }
                 } else {
+                    sentinal = false;
                     break;
                 }
             } catch (Exception e) {
+                sentinal = false;
                 break;
             }
 
-        }//end outer for loop
+        }//end outer while loop
 
         return moves;
     }

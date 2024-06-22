@@ -2,13 +2,13 @@ package com.eternals.potholechess;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Random;
 import javafx.scene.shape.Rectangle;
 
-public class Board implements Serializable {
+public final class Board implements Serializable {
 
-    private Tile_Node[][] board;
-    private int column, row;
+    private final Tile_Node[][] board;
+    private final int column_size;
+    private final int row_size;
     private Tile_Node selected_tile, destination_tile, temp_tile;
     private ArrayList<Tile_Node> moves;
     private String turn;
@@ -16,8 +16,8 @@ public class Board implements Serializable {
     public Board(int column, int row) {
 
         this.turn = "WHITE";
-        this.column = column;
-        this.row = row;
+        this.column_size = column;
+        this.row_size = row;
         board = new Tile_Node[column][row];
         allocate(column, row);
     }
@@ -26,10 +26,10 @@ public class Board implements Serializable {
 
         if (selected_tile == null) {
             if (board[column][row].has_piece() && board[column][row].is_not_pothole() && board[column][row].team().equals(turn)) {
-                if (!board[column][row].get_moves(board, column, row).isEmpty()){
-                selected_tile = board[column][row];
-                moves = board[column][row].get_moves(board, column, row);
-                highlight_moves();
+                if (!board[column][row].get_moves(board, column, row).isEmpty()) {
+                    selected_tile = board[column][row];
+                    moves = board[column][row].get_moves(board, column, row);
+                    highlight_moves();
                 }
             }
         } else if (moves.contains(board[column][row])) {
@@ -43,30 +43,86 @@ public class Board implements Serializable {
             moves = null;
         }
     }
-    
-    
-    public void unhighlight(){
-        if (!moves.isEmpty()){
-            for (Tile_Node move : moves){
+
+    public void unhighlight() {
+        if (!moves.isEmpty()) {
+            for (Tile_Node move : moves) {
                 move.display();
             }
-        }        
+        }
     }
-    
-    public void highlight_moves(){
-        if (!moves.isEmpty()){
-            for (Tile_Node move : moves){
+
+    public void highlight_moves() {
+        if (!moves.isEmpty()) {
+            for (Tile_Node move : moves) {
                 move.highlight();
             }
         }
     }
 
     public void move() {
-        
-        for (Tile_Node move : moves){
+
+        for (Tile_Node move : moves) {
             move.display();
         }
-        
+
+        if (selected_tile.get_piece() instanceof Rook) {
+            move_rook();
+        } else  if (selected_tile.get_piece() instanceof Pawn){
+            move_pawn();
+            
+        } else {
+        standard_move();            
+        }
+
+
+    }
+    
+    public void move_pawn(){
+        if (!selected_tile.get_piece().is_pawn()){
+            standard_move();
+        } else if (selected_tile.team().equals("BLACK")  && (destination_tile.get_row() == (row_size - 1))){
+            selected_tile.get_piece().promote();
+            standard_move();
+        } else if (selected_tile.team().equals("WHITE")  && (destination_tile.get_row() == 0)){
+            selected_tile.get_piece().promote();
+            standard_move();
+        } else {
+            standard_move();
+        }
+            
+    }
+
+    public void move_rook() {
+
+        if (destination_tile.has_piece()) {
+            if (destination_tile.team().equals(selected_tile.team())) {
+
+                if (destination_tile.get_column() > selected_tile.get_column()){
+                    board[destination_tile.get_column() - 1][destination_tile.get_row()].bind(destination_tile.get_piece());
+                    destination_tile.clear_piece();
+                    standard_move();
+                } else {
+                     board[destination_tile.get_column() + 1][destination_tile.get_row()].bind(destination_tile.get_piece());
+                     destination_tile.clear_piece();
+                    standard_move();                   
+                }
+                
+                
+                
+            } else {
+                standard_move();
+            }
+
+        } else {
+
+            standard_move();
+
+        }
+
+    }
+
+    public void standard_move() {
         destination_tile.bind(selected_tile.get_piece());
         destination_tile.increment_move();
         selected_tile.clear_piece();
@@ -84,12 +140,12 @@ public class Board implements Serializable {
             turn = "WHITE";
         }
     }
-    
-    public String get_game_info_text(){
+
+    public String get_game_info_text() {
         return turn + "'s turn!";
     }
-    
-    public void set_turn(){
+
+    public void set_turn() {
         turn = "WHITE";
     }
 
@@ -114,12 +170,12 @@ public class Board implements Serializable {
     }
 
     public void unbind() {
-        for (int i = 0; i < column; i++) {
-            for (int j = 0; j < row; j++) {
+        for (int i = 0; i < column_size; i++) {
+            for (int j = 0; j < row_size; j++) {
                 board[i][j].unbind();
             }
         }
-        
+
         moves = null;
         selected_tile = null;
         destination_tile = null;
@@ -148,13 +204,13 @@ public class Board implements Serializable {
     }
 
     public void clear_pieces() {
-        
+
         selected_tile = null;
         destination_tile = null;
         temp_tile = null;
         moves = null;
-        for (int i = 0; i < column; i++) {
-            for (int j = 0; j < row; j++) {
+        for (int i = 0; i < column_size; i++) {
+            for (int j = 0; j < row_size; j++) {
                 board[i][j].clear_piece();
             }
         }

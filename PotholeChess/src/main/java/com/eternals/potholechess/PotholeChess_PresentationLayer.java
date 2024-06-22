@@ -17,6 +17,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -44,10 +45,10 @@ public class PotholeChess_PresentationLayer extends Application {
         stage.setTitle("Team Eternals Pothole Chess!");
 
         //create outer_grid
-        GridPane outer_grid = create_content();
+        ScrollPane scroll_content = create_content();
 
         //Create scene using our outer_grid object
-        Scene scene = new Scene(outer_grid, 1100, 800);
+        Scene scene = new Scene(scroll_content, 1100, 800);
 
 //        var javaVersion = SystemInfo.javaVersion();
 //        var javafxVersion = SystemInfo.javafxVersion();
@@ -62,7 +63,7 @@ public class PotholeChess_PresentationLayer extends Application {
         launch();
     }
 
-    public GridPane create_content() {
+    public ScrollPane create_content() {
         //create outer_grid
         GridPane outer_grid = new GridPane();
 
@@ -137,8 +138,12 @@ public class PotholeChess_PresentationLayer extends Application {
 
         //add inner_grid object containing board to the outer_grid
         outer_grid.add(inner_grid, 1, 0);
+        
+        
+        ScrollPane scroll_content = new ScrollPane();
+        scroll_content.setContent(outer_grid);
 
-        return outer_grid;
+        return scroll_content;
     }//end create_content()
     
     private void tile_clicked(int column, int row){
@@ -148,10 +153,10 @@ public class PotholeChess_PresentationLayer extends Application {
 
     //regenerates the scene content and displays the new scene
     private void refresh_scene() {
-        GridPane outer_grid = create_content();
+        ScrollPane scroll_content = create_content();
 
         Scene current_scene = primary_stage.getScene();
-        current_scene.setRoot(outer_grid);
+        current_scene.setRoot(scroll_content);
 
     }//end refresh_scene()
 

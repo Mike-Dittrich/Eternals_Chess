@@ -23,6 +23,12 @@ public class Piece implements Serializable {
         
         return moves;
     }
+    public void promote(){
+        
+    }
+    public boolean is_pawn(){
+     return true;   
+    }
 
     void set_move_count() {
         move_count = 0;

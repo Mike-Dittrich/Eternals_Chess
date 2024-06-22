@@ -18,6 +18,14 @@ public class Tile_Node implements Serializable {
         this.allocation = "Memory Allocated";
     }
     
+    public int get_column(){
+        return column;
+    }
+    
+    public int get_row(){
+        return row;
+    }
+    
     public ArrayList<Tile_Node> get_moves(Tile_Node[][] board, int column, int row){
         return piece.get_moves(board, column, row);
     }
