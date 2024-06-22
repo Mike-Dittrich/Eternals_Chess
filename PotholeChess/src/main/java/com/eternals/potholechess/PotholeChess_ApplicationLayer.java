@@ -113,6 +113,7 @@ public class PotholeChess_ApplicationLayer implements Serializable {
 
     public void reset_board() {
         pothole = false;
+        apocalypse = false;
         white = new Team("WHITE");
         black = new Team("BLACK");
         board.clear_pieces();
