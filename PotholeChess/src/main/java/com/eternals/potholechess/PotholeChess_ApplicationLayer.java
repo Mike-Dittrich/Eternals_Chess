@@ -260,7 +260,10 @@ public class PotholeChess_ApplicationLayer implements Serializable {
     }
 
     public String get_game_info_text() {
+        
         return board.get_game_info_text();
+
+
     }
 
     /**
