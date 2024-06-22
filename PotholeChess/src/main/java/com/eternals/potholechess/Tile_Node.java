@@ -1,6 +1,7 @@
 package com.eternals.potholechess;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -15,6 +16,19 @@ public class Tile_Node implements Serializable {
 
     public Tile_Node() {
         this.allocation = "Memory Allocated";
+    }
+    
+    public ArrayList<Tile_Node> get_moves(Tile_Node[][] board, int column, int row){
+        return piece.get_moves(board, column, row);
+    }
+    
+    public void highlight(){
+        rectangle.setStroke(Color.GREEN);
+        rectangle.setStrokeWidth(5);
+    }
+    
+    public void increment_move(){
+        piece.increment_move();
     }
 
     public void bind(Rectangle rectangle, int column, int row) {
@@ -81,13 +95,27 @@ public class Tile_Node implements Serializable {
 
         if (piece != null && rectangle != null) {
             Image image = new Image("file:" + piece.get_image_file());
+            
+            rectangle.setFill(new ImagePattern(image));        
+            
+            if ((row + column) % 2 == 0){
+                rectangle.setStroke(Color.WHITE);
+                rectangle.setStrokeWidth(5);                
+            } else {
+                rectangle.setStroke(Color.BLACK);
+                rectangle.setStrokeWidth(5);                
+            }
 
-            rectangle.setFill(new ImagePattern(image));
+
         } else if (rectangle != null){
             if ((row + column) % 2 == 0) {
                 rectangle.setFill(Color.WHITE);
+                rectangle.setStroke(Color.WHITE);
+                rectangle.setStrokeWidth(5);
             } else {
                 rectangle.setFill(Color.BLACK);
+                rectangle.setStroke(Color.BLACK);
+                rectangle.setStrokeWidth(5);
             }
         }
 

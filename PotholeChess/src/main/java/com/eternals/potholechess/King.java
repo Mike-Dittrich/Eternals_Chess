@@ -9,8 +9,81 @@ public class King extends Piece implements Serializable {
         super(color);
     }
 
-    public ArrayList<Tile_Node> get_moves(Board board) {
-        ArrayList<Tile_Node> moves = null;
+    @Override
+    public ArrayList<Tile_Node> get_moves(Tile_Node[][] board, int column, int row) {
+        ArrayList<Tile_Node> moves = new ArrayList<>();
+
+        try {
+            if (board[column][row + 1].is_not_pothole()) {
+                if (!board[column][row + 1].team().equals(board[column][row].team())) {
+                    moves.add(board[column][row + 1]);
+                }
+            }
+        } catch (Exception e) {
+        }
+
+        try {
+            if (board[column + 1][row + 1].is_not_pothole()) {
+                if (!board[column + 1][row + 1].team().equals(board[column][row].team())) {
+                    moves.add(board[column + 1][row + 1]);
+                }
+            }
+        } catch (Exception e) {
+        }
+
+        try {
+            if (board[column + 1][row].is_not_pothole()) {
+                if (!board[column + 1][row].team().equals(board[column][row].team())) {
+                    moves.add(board[column + 1][row]);
+                }
+            }
+        } catch (Exception e) {
+        }
+
+        try {
+            if (board[column + 1][row - 1].is_not_pothole()) {
+                if (!board[column + 1][row - 1].team().equals(board[column][row].team())) {
+                    moves.add(board[column + 1][row - 1]);
+                }
+            }
+        } catch (Exception e) {
+        }
+
+        try {
+            if (board[column][row - 1].is_not_pothole()) {
+                if (!board[column][row - 1].team().equals(board[column][row].team())) {
+                    moves.add(board[column][row - 1]);
+                }
+            }
+        } catch (Exception e) {
+        }
+
+        try {
+            if (board[column - 1][row - 1].is_not_pothole()) {
+                if (!board[column - 1][row - 1].team().equals(board[column][row].team())) {
+                    moves.add(board[column - 1][row - 1]);
+                }
+            }
+        } catch (Exception e) {
+        }
+
+        try {
+            if (board[column - 1][row].is_not_pothole()) {
+                if (!board[column - 1][row].team().equals(board[column][row].team())) {
+                    moves.add(board[column - 1][row]);
+                }
+            }
+        } catch (Exception e) {
+        }
+
+        try {
+            if (board[column - 1][row + 1].is_not_pothole()) {
+                if (!board[column - 1][row + 1].team().equals(board[column][row].team())) {
+                    moves.add(board[column - 1][row + 1]);
+                }
+            }
+        } catch (Exception e) {
+        }
 
         return moves;
     }

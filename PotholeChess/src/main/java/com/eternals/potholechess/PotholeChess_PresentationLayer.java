@@ -115,8 +115,12 @@ public class PotholeChess_PresentationLayer extends Application {
 
                 if ((row + column) % 2 == 0) {
                     tile.setFill(Color.WHITE);
+                    tile.setStroke(Color.WHITE);
+                    tile.setStrokeWidth(5);
                 } else {
                     tile.setFill(Color.BLACK);
+                    tile.setStroke(Color.BLACK);
+                    tile.setStrokeWidth(5);
                 }
                 game.bind(tile, column, row);
                 inner_grid.add(tile, column, row);

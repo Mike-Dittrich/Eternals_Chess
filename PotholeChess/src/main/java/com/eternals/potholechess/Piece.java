@@ -1,6 +1,7 @@
 package com.eternals.potholechess;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Piece implements Serializable {
 
@@ -12,6 +13,16 @@ public class Piece implements Serializable {
         set_color(color);
 
     }
+    
+    public void increment_move(){
+        move_count++;
+    }
+    
+    public ArrayList<Tile_Node> get_moves(Tile_Node[][] board, int column, int row){
+        ArrayList<Tile_Node> moves = new ArrayList<>();
+        
+        return moves;
+    }
 
     void set_move_count() {
         move_count = 0;
@@ -20,6 +31,10 @@ public class Piece implements Serializable {
     void set_color(String color) {
             this.color = color;
         
+    }
+    
+    public int get_move_count(){
+        return move_count;
     }
     
     String get_color(){

@@ -9,8 +9,9 @@ public class Bishop extends Piece implements Serializable {
         super(color);
     }
 
-    public ArrayList<Tile_Node> get_moves(Board board) {
-        ArrayList<Tile_Node> moves = null;
+    @Override
+    public ArrayList<Tile_Node> get_moves(Tile_Node[][] board, int column, int row) {
+        ArrayList<Tile_Node> moves = new ArrayList<>();
 
         return moves;
     }

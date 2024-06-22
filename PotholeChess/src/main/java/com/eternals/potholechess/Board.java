@@ -1,6 +1,7 @@
 package com.eternals.potholechess;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Random;
 import javafx.scene.shape.Rectangle;
 
@@ -9,6 +10,7 @@ public class Board implements Serializable {
     private Tile_Node[][] board;
     private int column, row;
     private Tile_Node selected_tile, destination_tile, temp_tile;
+    private ArrayList<Tile_Node> moves;
     private String turn;
 
     public Board(int column, int row) {
@@ -24,25 +26,54 @@ public class Board implements Serializable {
 
         if (selected_tile == null) {
             if (board[column][row].has_piece() && board[column][row].is_not_pothole() && board[column][row].team().equals(turn)) {
+                if (!board[column][row].get_moves(board, column, row).isEmpty()){
                 selected_tile = board[column][row];
+                moves = board[column][row].get_moves(board, column, row);
+                highlight_moves();
+                }
             }
-        } else if (board[column][row].is_not_pothole() && !board[column][row].team().equals(turn)) {
+        } else if (moves.contains(board[column][row])) {
             destination_tile = board[column][row];
             move();
         } else {
+            unhighlight();
             selected_tile = null;
             destination_tile = null;
             temp_tile = null;
+            moves = null;
+        }
+    }
+    
+    
+    public void unhighlight(){
+        if (!moves.isEmpty()){
+            for (Tile_Node move : moves){
+                move.display();
+            }
+        }        
+    }
+    
+    public void highlight_moves(){
+        if (!moves.isEmpty()){
+            for (Tile_Node move : moves){
+                move.highlight();
+            }
         }
     }
 
     public void move() {
         
+        for (Tile_Node move : moves){
+            move.display();
+        }
+        
         destination_tile.bind(selected_tile.get_piece());
+        destination_tile.increment_move();
         selected_tile.clear_piece();
         selected_tile = null;
         destination_tile = null;
         temp_tile = null;
+        moves = null;
         switch_turn();
     }
 
@@ -89,6 +120,7 @@ public class Board implements Serializable {
             }
         }
         
+        moves = null;
         selected_tile = null;
         destination_tile = null;
         temp_tile = null;
@@ -104,12 +136,7 @@ public class Board implements Serializable {
     }
 
     public boolean has_piece(int column, int row) {
-
-        if (board[column][row].has_piece()) {
-            return true;
-        } else {
-            return false;
-        }
+        return board[column][row].has_piece();
     }
 
     void display(int i, int j) {
@@ -121,6 +148,11 @@ public class Board implements Serializable {
     }
 
     public void clear_pieces() {
+        
+        selected_tile = null;
+        destination_tile = null;
+        temp_tile = null;
+        moves = null;
         for (int i = 0; i < column; i++) {
             for (int j = 0; j < row; j++) {
                 board[i][j].clear_piece();

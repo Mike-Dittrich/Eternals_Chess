@@ -16,19 +16,34 @@ class Team implements Serializable {
     }
 
     public void initialize_team() {
+
         team = new ArrayList<>();
 
-        for (int i = 0; i < 8; i++) {
-            team.add(new Pawn(color));
+        if (color.equals("WHITE")) {
+            for (int i = 0; i < 8; i++) {
+                team.add(new Pawn(color));
+            }
+            team.add(new Rook(color));
+            team.add(new Knight(color));
+            team.add(new Bishop(color));
+            team.add(new Queen(color));
+            team.add(new King(color));
+            team.add(new Bishop(color));
+            team.add(new Knight(color));
+            team.add(new Rook(color));
+        } else if (color.equals("BLACK")) {
+            for (int i = 0; i < 8; i++) {
+                team.add(new Pawn(color));
+            }
+            team.add(new Rook(color));
+            team.add(new Knight(color));
+            team.add(new Bishop(color));
+            team.add(new King(color));
+            team.add(new Queen(color));
+            team.add(new Bishop(color));
+            team.add(new Knight(color));
+            team.add(new Rook(color));
         }
-        team.add(new Rook(color));
-        team.add(new Knight(color));
-        team.add(new Bishop(color));
-        team.add(new Queen(color));
-        team.add(new King(color));
-        team.add(new Bishop(color));
-        team.add(new Knight(color));
-        team.add(new Rook(color));
     }
 
     public Piece get(int i) {
