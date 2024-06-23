@@ -16,9 +16,21 @@ public class Pawn extends Piece implements Serializable {
     public void promote() {
         promotion = true;
     }
+    
     @Override
-    public boolean is_pawn(){
-     return !promotion;   
+    public void set_double_jump(){
+        double_jump = true;
+    }
+    
+    
+    @Override
+    public boolean double_jump(){
+        return (double_jump && get_move_count() == 1);
+    }
+
+    @Override
+    public boolean is_pawn() {
+        return !promotion;
     }
 
     private ArrayList<Tile_Node> get_black_moves(Tile_Node[][] board, int column, int row) {
@@ -63,22 +75,34 @@ public class Pawn extends Piece implements Serializable {
         }
 
         try {
-            if (board[column + 1][row + 2].is_not_pothole() && !board[column + 1][row + 2].team().equals("EMPTY") && this.move_count == 0) {
-                if (!board[column + 1][row + 2].team().equals(board[column][row].team())) {
-                    moves.add(board[column + 1][row + 2]);
+
+            if (board[column + 1][row].is_not_pothole() && board[column + 1][row].has_piece()) {
+                if (!board[column + 1][row].team().equals(board[column][row].team())) {
+                    if (board[column + 1][row].get_piece() instanceof Pawn && board[column + 1][row].get_piece().double_jump()) {
+                        if (board[column + 1][row + 1].is_not_pothole() && !board[column + 1][row + 1].team().equals(board[column][row].team())) {
+                            moves.add(board[column + 1][row + 1]);
+                        }
+                    }
                 }
+
             }
 
         } catch (Exception e) {
         }
 
         try {
-            if (board[column - 1][row + 2].is_not_pothole() && !board[column - 1][row + 2].team().equals("EMPTY") && this.move_count == 0) {
-                if (!board[column - 1][row + 2].team().equals(board[column][row].team())) {
-                    moves.add(board[column - 1][row + 2]);
+
+            if (board[column - 1][row].is_not_pothole() && board[column - 1][row].has_piece()) {
+                if (!board[column - 1][row].team().equals(board[column][row].team())) {
+                    if (board[column - 1][row].get_piece() instanceof Pawn && board[column - 1][row].get_piece().double_jump()) {
+                        if (board[column - 1][row + 1].is_not_pothole() && !board[column - 1][row + 1].team().equals(board[column][row].team())) {
+                            moves.add(board[column - 1][row + 1]);
+                        }
+                    }
                 }
 
             }
+
 
         } catch (Exception e) {
         }
@@ -128,22 +152,34 @@ public class Pawn extends Piece implements Serializable {
         }
 
         try {
-            if (board[column + 1][row - 2].is_not_pothole() && !board[column + 1][row - 2].team().equals("EMPTY") && this.move_count == 0) {
-                if (!board[column + 1][row - 2].team().equals(board[column][row].team())) {
-                    moves.add(board[column + 1][row - 2]);
+
+            if (board[column + 1][row].is_not_pothole() && board[column + 1][row].has_piece()) {
+                if (!board[column + 1][row].team().equals(board[column][row].team())) {
+                    if (board[column + 1][row].get_piece() instanceof Pawn && board[column + 1][row].get_piece().get_move_count() == 1) {
+                        if (board[column + 1][row - 1].is_not_pothole() && !board[column + 1][row - 1].team().equals(board[column][row].team())) {
+                            moves.add(board[column + 1][row - 1]);
+                        }
+                    }
                 }
+
             }
 
         } catch (Exception e) {
         }
 
         try {
-            if (board[column - 1][row - 2].is_not_pothole() && !board[column - 1][row - 2].team().equals("EMPTY") && this.move_count == 0) {
-                if (!board[column - 1][row - 2].team().equals(board[column][row].team())) {
-                    moves.add(board[column - 1][row - 2]);
+
+            if (board[column - 1][row].is_not_pothole() && board[column - 1][row].has_piece()) {
+                if (!board[column - 1][row].team().equals(board[column][row].team())) {
+                    if (board[column - 1][row].get_piece() instanceof Pawn && board[column - 1][row].get_piece().get_move_count() == 1) {
+                        if (board[column - 1][row - 1].is_not_pothole() && !board[column - 1][row - 1].team().equals(board[column][row].team())) {
+                            moves.add(board[column - 1][row - 1]);
+                        }
+                    }
                 }
 
             }
+
 
         } catch (Exception e) {
         }
@@ -441,11 +477,10 @@ public class Pawn extends Piece implements Serializable {
             return get_black_moves(board, column, row);
         } else if (this.color.equals("WHITE") && !promotion) {
             return get_white_moves(board, column, row);
-        } else  {
+        } else {
             return get_queen_moves(board, column, row);
         }
 
-        
     }
 
     @Override

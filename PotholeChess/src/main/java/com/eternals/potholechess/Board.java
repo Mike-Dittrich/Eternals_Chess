@@ -93,7 +93,24 @@ public final class Board implements Serializable {
         } else if (selected_tile.team().equals("WHITE") && (destination_tile.get_row() == 0)) {
             selected_tile.get_piece().promote();
             standard_move();
+        } else if (selected_tile.get_row() - destination_tile.get_row() > 1 && turn.equals("WHITE")) {
+            selected_tile.get_piece().set_double_jump();
+            standard_move();
+        } else if (selected_tile.get_row() - destination_tile.get_row() < -1 && turn.equals("BLACK")) {
+            selected_tile.get_piece().set_double_jump();
+            standard_move();
+        } else if (destination_tile.get_column() != selected_tile.get_column() && destination_tile.team().equals("EMPTY")) {
+
+            if (turn.equals("WHITE")) {
+                board[destination_tile.get_column()][destination_tile.get_row() + 1].remove_piece();
+                board[destination_tile.get_column()][destination_tile.get_row() + 1].display();
+            } else {
+                board[destination_tile.get_column()][destination_tile.get_row() - 1].remove_piece();
+                board[destination_tile.get_column()][destination_tile.get_row() - 1].display();
+            }
+            standard_move();
         } else {
+
             standard_move();
         }
 
@@ -105,12 +122,16 @@ public final class Board implements Serializable {
             if (destination_tile.team().equals(selected_tile.team())) {
 
                 if (destination_tile.get_column() > selected_tile.get_column()) {
-                    board[destination_tile.get_column() - 1][destination_tile.get_row()].bind(destination_tile.get_piece());
+                    board[destination_tile.get_column() - 2][destination_tile.get_row()].bind(destination_tile.get_piece());
+                    board[destination_tile.get_column() - 2][destination_tile.get_row()].increment_move();
                     destination_tile.clear_piece();
+                    destination_tile = board[destination_tile.get_column() - 1][destination_tile.get_row()];
                     standard_move();
                 } else {
-                    board[destination_tile.get_column() + 1][destination_tile.get_row()].bind(destination_tile.get_piece());
+                    board[destination_tile.get_column() + 2][destination_tile.get_row()].bind(destination_tile.get_piece());
+                    board[destination_tile.get_column() + 2][destination_tile.get_row()].increment_move();
                     destination_tile.clear_piece();
+                    destination_tile = board[destination_tile.get_column() + 1][destination_tile.get_row()];
                     standard_move();
                 }
 

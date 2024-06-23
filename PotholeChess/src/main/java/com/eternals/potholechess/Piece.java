@@ -7,11 +7,21 @@ public class Piece implements Serializable {
 
     int move_count;
     String color;
+    boolean double_jump;
 
     public Piece(String color) {
         set_move_count();
         set_color(color);
+        double_jump = false;
 
+    }
+    
+    public boolean double_jump(){
+        return double_jump;
+    }
+    
+    public void set_double_jump(){
+        
     }
     
     public void increment_move(){
